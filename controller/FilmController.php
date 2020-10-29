@@ -9,10 +9,11 @@ class FilmController
         $this->conn = $conn;
     }
 
-    public function allFilms(/*$languageId*/)
+    public function allFilms($languageId)
     {
-        $query = "SELECT tf.id, tf.image, tfl.languageId FROM tbfilms tf INNER JOIN tbfilmlanguages tfl ON tfl.filmId=tf.id WHERE tfl.languageId=1";
+        $query = "SELECT tf.id, tf.image, tfl.languageId FROM tbfilms tf INNER JOIN tbfilmlanguages tfl ON tfl.filmId=tf.id WHERE tfl.languageId=:languageId";
         $stm = $this->conn->prepare($query);
+        $stm->bindparam(":languageId", $languageId);
         if ($stm->execute()) {
             $result = $stm->fetchAll(PDO::FETCH_OBJ);
             foreach ($result as $film) {
@@ -196,6 +197,47 @@ class FilmController
                     echo "<option value='$genre->id'>$genre->name</option>";
                 } else {
                     echo "<option selected='selected' value='$genre->id'>$genre->name</option>";
+                }
+            }
+        }
+    }
+
+    public function allLanguagesCB($id)
+    {
+        $query = "SELECT id, name FROM tblanguages";
+        $stm = $this->conn->prepare($query);
+        if ($stm->execute()) {
+            $result = $stm->fetchAll(PDO::FETCH_OBJ);
+            foreach ($result as $language) {
+                if ($language->id != $id) {
+                    echo "<option value='$language->id'>$language->name</option>";
+                } else {
+                    echo "<option selected='selected' value='$language->id'>$language->name</option>";
+                }
+            }
+        }
+    }
+
+    public function usedLanguagesCB($filmId, $languageId)
+    {
+        $query = "SELECT tfl.languageId AS id, tl.name AS name FROM tbfilmlanguages tfl INNER JOIN tblanguages tl ON tl.id=tfl.languageId WHERE tfl.filmId=:filmId";
+        $stm = $this->conn->prepare($query);
+        $stm->bindparam("filmId", $filmId);
+        if ($stm->execute()) {
+            $usedLanguages = $stm->fetchAll(PDO::FETCH_OBJ);
+        }
+
+        $query = "SELECT id, name FROM tblanguages";
+        $stm = $this->conn->prepare($query);
+        if ($stm->execute()) {
+            $allLanguages = $stm->fetchAll(PDO::FETCH_OBJ);
+            foreach ($allLanguages as $aLanguage) {
+                if (in_array($aLanguage, $usedLanguages)) {
+                    if ($aLanguage->id != $languageId) {
+                        echo "<option value='$aLanguage->id'>$aLanguage->name</option>";
+                    } else {
+                        echo "<option selected='selected' value='$aLanguage->id'>$aLanguage->name</option>";
+                    }
                 }
             }
         }

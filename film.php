@@ -49,6 +49,17 @@ $film = $FC->getFilm($_GET["id"], $_GET["languageId"]);
                 ?>
             </ul>
             <ul class="navbar-nav mt-2 mt-lg-0">
+                <form>
+                    <select class="form-control" name="cbLanguage" id="cbLanguage">
+                        <?php
+                        if (isset($_COOKIE["language"])) {
+                            $FC->usedLanguagesCB($_GET["id"], $_COOKIE["language"]);
+                        } else {
+                            $FC->usedLanguagesCB($_GET["id"], 1);
+                        }
+                        ?>
+                    </select>
+                </form>
                 <li class="nav-item">
                     <?php
                     if (!$FC->checkLogin()) {
@@ -106,10 +117,17 @@ $film = $FC->getFilm($_GET["id"], $_GET["languageId"]);
             </div>
         </div>
     </div>
-
     <!-- Optional JavaScript -->
+    <script>
+        document.getElementById("cbLanguage").addEventListener("change", function() {
+            var filmsLanguageId = document.getElementById("cbLanguage").value;
+            var filmId = <?php echo $_GET["id"] ?>;
+            document.cookie = "language=" + filmsLanguageId;
+            window.location.href = "film.php?id=" + filmId + "&languageId=" + filmsLanguageId;
+        });
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

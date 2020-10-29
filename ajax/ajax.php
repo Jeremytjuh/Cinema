@@ -18,3 +18,9 @@ if (isset($_GET["editFilmId"]) && isset($_GET["languageId"])) {
 if (isset($_GET["genreId"])) {
     $FC->allGenresCB(intval($_GET["genreId"]));
 }
+
+if (isset($_GET["filmsLanguageId"])) {
+    $languageId = intval($_GET["filmsLanguageId"]);
+    setcookie("language", $languageId);
+    $FC->allFilms($languageId);
+}

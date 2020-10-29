@@ -51,7 +51,11 @@ $FC->startSession();
                 <form>
                     <select class="form-control" name="cbLanguage" id="cbLanguage">
                         <?php
-                        $FC->allLanguages();
+                        if (isset($_COOKIE["language"])) {
+                            $FC->allLanguagesCB($_COOKIE["language"]);
+                        } else {
+                            $FC->allLanguages();
+                        }
                         ?>
                     </select>
                 </form>
@@ -74,10 +78,14 @@ $FC->startSession();
     <header id="logobg" style="min-height: 100vh;">
         <div class="container">
             <div class="col-md-12 filminfobackground" id="login" style="min-height: 100vh; z-index: 50;">
-                <div class="row">
+                <div class="row" id="filmRow">
                     <!-- Zoek functie ofzo -->
                     <?php
-                    $FC->allFilms();
+                    if (isset($_COOKIE["language"])) {
+                        $FC->allFilms($_COOKIE["language"]);
+                    } else {
+                        $FC->allFilms(1);
+                    }
                     ?>
                 </div>
             </div>
@@ -86,32 +94,30 @@ $FC->startSession();
     <!-- Optional JavaScript -->
     <script>
         document.getElementById("cbLanguage").addEventListener("change", function() {
-            var languageId = document.getElementById("cbLanguage").value;
-            if (languageId != "") {
-                $.ajax({
-                    dataType: "json",
-                    url: 'ajax/ajax.php',
-                    data: {
-                        editFilmId: editFilmId,
-                        languageId: languageId
-                    },
-                    success: function(data) {
-                        FillForm(data);
-                        getUsedGenre(data.genreId);
-                        enableInputs();
-                    },
-                    error: function(data) {
-                        alert("Error " + data.name);
-                    }
-                });
-            } else {
-                EmptyForm();
-                disableInputs();
-            }
+            var filmsLanguageId = document.getElementById("cbLanguage").value;
+            $.ajax({
+                dataType: "html",
+                url: 'ajax/ajax.php',
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {
+                    filmsLanguageId: filmsLanguageId,
+                },
+                beforeSend: function(xhr) {
+                    document.cookie = "language=" + filmsLanguageId;
+                },
+                success: function(data) {
+                    document.getElementById("filmRow").innerHTML = data;
+                },
+                error: function(data) {
+                    alert("Error");
+                }
+            });
         });
     </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
