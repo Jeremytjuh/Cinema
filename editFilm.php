@@ -182,7 +182,7 @@ if (isset($_POST["btnSubmit"])) {
                         document.getElementById("cbLanguage").disabled = false;
                     };
                 };
-                xmlHTTP.open("GET", "ajax.php?languagesFilmId=" + languagesFilmId, true);
+                xmlHTTP.open("GET", "ajax/ajax.php?languagesFilmId=" + languagesFilmId, true);
                 xmlHTTP.send();
             } else {
                 document.getElementById("cbLanguage").innerHTML = "";
@@ -199,7 +199,7 @@ if (isset($_POST["btnSubmit"])) {
             if (languageId != "") {
                 $.ajax({
                     dataType: "json",
-                    url: 'ajax.php',
+                    url: 'ajax/ajax.php',
                     data: {
                         editFilmId: editFilmId,
                         languageId: languageId
@@ -249,7 +249,7 @@ if (isset($_POST["btnSubmit"])) {
                         document.getElementById("cbGenre").innerHTML = this.responseText;
                     };
                 };
-                xmlHTTP.open("GET", "ajax.php?genreId=" + genreId, true);
+                xmlHTTP.open("GET", "ajax/ajax.php?genreId=" + genreId, true);
                 xmlHTTP.send();
             }
         });

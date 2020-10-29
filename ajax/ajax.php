@@ -1,5 +1,5 @@
 <?php
-require('controller/FilmController.php');
+require('../controller/FilmController.php');
 $FC = new FilmController();
 if (isset($_GET["filmId"])) {
     $FC->allTranslationLanguages(intval($_GET["filmId"]));

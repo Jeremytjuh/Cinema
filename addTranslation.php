@@ -129,7 +129,7 @@ if (isset($_POST["btnSubmit"])) {
                         document.getElementById("cbLanguage").innerHTML = this.responseText;
                     };
                 };
-                xmlHTTP.open("GET", "ajax.php?filmId=" + filmId, true);
+                xmlHTTP.open("GET", "ajax/ajax.php?filmId=" + filmId, true);
                 xmlHTTP.send();
             } else {
                 document.getElementById("cbLanguage").innerHTML = "";

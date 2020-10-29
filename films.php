@@ -90,7 +90,7 @@ $FC->startSession();
             if (languageId != "") {
                 $.ajax({
                     dataType: "json",
-                    url: 'ajax.php',
+                    url: 'ajax/ajax.php',
                     data: {
                         editFilmId: editFilmId,
                         languageId: languageId
