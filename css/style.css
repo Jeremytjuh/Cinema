@@ -1,0 +1,120 @@
+body {
+    color: white;
+    background-color: white;
+}
+
+#logo {
+    margin-top: 45vh;
+}
+
+#logobg {
+    background: url("../img/logobg.jpg") no-repeat center;
+    background-size: cover;
+    position: relative;
+}
+
+#logobg:after {
+    background-color: rgba(0,0,0, 0.8);
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    content: "";
+    text-align: center;
+
+    font-size: 65px;
+    color: #343a40;
+    font-family: Arial Black, Gadget, sans-serif;
+}
+
+.logocolors {
+    color: #2C77B8;
+}
+
+/*Leuke kleur #2C77B8*/
+
+#cinemabg {
+    background: url("../img/cinemabg.png") no-repeat center;
+    background-size: cover;
+    min-height: 25vh;
+}
+
+.carousel {
+    width: 300px;
+    float: center;
+    margin: auto;
+    margin-bottom: 25px;
+}
+
+.carousel-img {
+    border: solid 0px white;
+    border-radius: 50%;
+}
+
+.carousel-caption {
+    color: #343a40;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: solid 0.5px #343a40;
+    border-radius: 50%;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.films {
+    min-height: 350px;
+    max-height: 450px;
+    text-align: center;
+}
+
+.poster {
+    height: 300px;
+    box-shadow: 0px 0px 10px 1px rgba(255,255,255,0.75);
+    transition: transform 0.75s ease;
+}
+
+.poster:hover {
+    transform: scale(1.2);
+}
+
+.filmposter {
+    height: 500px;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+    text-align: center;
+    margin: auto;
+    float: center;
+    display: block;
+}
+
+.trailer {
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+    text-align: center;
+    margin: auto;
+    float: center;
+    display: block;
+    height: 360px;
+    min-width: 320px;
+    width: 80%;
+}
+
+.filminfo {
+    margin: auto;
+    float: center;
+    display: block;
+    width: 80%;
+    min-width: 320px
+}
+
+.filminfobackground {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: 20px;
+}
+
+.filmbackground {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
